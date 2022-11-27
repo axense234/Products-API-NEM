@@ -19,11 +19,68 @@ paths:
         "400":
           description: Incorrect username/password.
   # Get All Products Route
-  /products:
+  /products?name&sale&tag&numericFilters&sort&fields&page&limit&expDate:
     get:
       description: Route used for getting all products from Products API.
       tags:
         - GET Products
+      parameters:
+        - in: query
+          name: name
+          description: Query Param to filter query results by name in Products API.
+          schema:
+            type: string
+        - in: query
+          name: sale
+          description: Query Param to see products on sale in Products API(true or false).
+          schema:
+            type: integer
+        - in: query
+          name: tag
+          description: Query Param to filter query results by tag in Products API.Tags available are fruit,vegetable,condiment,canned,grain,beverage,meat,dairy,hygiene,animals.
+          schema:
+            type: string
+          enum:
+            - fruit
+            - vegetable
+            - condiment
+            - canned
+            - grain
+            - beverage
+            - meat
+            - dairy
+            - hygiene
+            - animals
+        - in: query
+          name: numericFilters
+          description: Query param to sort by numeric filters,like "price >= 90" or "purchases <= 2".
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: Query param to sort by fields,like name price etc.
+          schema:
+            type: string
+        - in: query
+          name: fields
+          description: Query param to receive only the specific fields of a product.
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Query param to access only the a specific page in Products API.
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          description: Query param to limit the amount of products received in request.
+          schema:
+            type: integer
+        - in: query
+          name: expDate
+          description: Query param to sort products received by expDate.
+          schema:
+            type: string
       responses:
         "200":
           description: Successfully got all products from Products API.
