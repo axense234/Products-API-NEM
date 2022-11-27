@@ -1,0 +1,193 @@
+paths:
+  # Authorize Route
+  /products/authorize:
+    post:
+      description: Route used to Authorize.To authorize click the Authorize button on the top and add "Bearer x",where x is the token you will receive.
+      tags:
+        - AUTHORIZE Products
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: Authorization Token
+          description: Enter username and password to be authorized.
+          schema:
+            $ref: "#/components/schemas/Authorization"
+      responses:
+        "200":
+          description: Got the token successfully.
+        "400":
+          description: Incorrect username/password.
+  # Get All Products Route
+  /products:
+    get:
+      description: Route used for getting all products from Products API.
+      tags:
+        - GET Products
+      responses:
+        "200":
+          description: Successfully got all products from Products API.
+        "400":
+          description: Could not find products from Products API.
+  # Get Product by ID Route
+  /products/{id}:
+    get:
+      description: Route used for getting a product using it's id from Products API.
+      tags:
+        - GET Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the product you want to find.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully got product with id.
+        "404":
+          description: Could not find the product with the respective id.
+  # Create Product Route
+  /products/create:
+    post:
+      description: Route used in order to create a Products API product.
+      tags:
+        - POST Products
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: Product
+          description: Product Body to create a Products API Product.
+          schema:
+            $ref: "#/components/schemas/Product"
+      responses:
+        "201":
+          description: Successfully created a product in Products API.
+        "400":
+          description: Could not create product in Products API.
+  # Insert Template Products Route
+  /products/insert-all:
+    post:
+      security:
+        - bearerAuth: []
+      description: Insert Template Products
+      tags:
+        - POST Products
+      responses:
+        "201":
+          description: Successfully inserted template products in Products API.
+        "500":
+          description: Could not insert template products in Products API(Server Error)
+  # Update Product by ID Route
+  /products/update/{id}:
+    patch:
+      description: Update single product by id in Products API.
+      tags:
+        - UPDATE Products
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: Product
+          description: Product Body to Update a Products API Product.
+          schema:
+            $ref: "#/components/schemas/Product"
+        - in: path
+          name: id
+          required: true
+          description: The id of the product you want to update.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully updated a product in Products API.
+        "400":
+          description: Could not update product in Products API.
+  # Purchase Product by ID and Amount Route
+  /products/buy/{id}?amount:
+    patch:
+      description: Buy single product by id and amount in Products API.
+      tags:
+        - UPDATE Products
+      consumes:
+        - application/json
+      parameters:
+        - in: query
+          name: amount
+          description: Query Param to buy a Products API Product by x amount.
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          description: The id of the product you want to buy.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully bought a product in Products API.
+        "404":
+          description: Could not find a product in Products API to buy.
+  # Set Sale of a Product by ID and saleAmount Route
+  /products/sale/{id}?saleAmount:
+    patch:
+      security:
+        - bearerAuth: []
+      description: Set sale of a  single product by id and sale procentage in Products API.
+      tags:
+        - UPDATE Products
+      consumes:
+        - application/json
+      parameters:
+        - in: query
+          name: saleAmount
+          description: Query Param to create a sale of a Products API Product by x saleAmount.
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          description: The id of the product you want to set the sale of.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully set the sale of a product in Products API.
+        "404":
+          description: Could not find a product in Products API to set the sale of.
+        "400":
+          description: Could not set the sale of the product with the id in Products API.
+  # Delete Product by ID Route
+  /products/delete/{id}:
+    delete:
+      security:
+        - bearerAuth: []
+      description: Route used for deleting a product using it's id from Products API.
+      tags:
+        - DELETE Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the product you want to delete.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully deleted product with the respective id.
+        "404":
+          description: Could not find/delete the product with the respective id.
+  # Delete All Products Route
+  /products/delete-all:
+    delete:
+      security:
+        - bearerAuth: []
+      description: Route used for deleting all product from Products API.
+      tags:
+        - DELETE Products
+      responses:
+        "200":
+          description: Successfully deleted all products with in Products API.
+        "500":
+          description: Something went wrong,couldn't delete all products in Products API.
