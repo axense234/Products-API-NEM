@@ -53,8 +53,8 @@ const swaggerOptions = {
     },
     // Servers for development/production
     servers: [
-      "http://localhost:4000",
-      "https://products-api-nem-ca.onrender.com",
+      { url: "http://localhost:4000" },
+      { url: "https://products-api-nem-ca.onrender.com" },
     ],
   },
   apis: ["./docs/*.yaml"],
