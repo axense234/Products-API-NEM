@@ -54,7 +54,7 @@ const swaggerOptions = {
     // Servers for development/production
     servers: [
       "http://localhost:4000",
-      "https://blogfree-server-ca.onrender.com",
+      "https://products-api-nem-ca.onrender.com",
     ],
   },
   apis: ["./docs/*.yaml"],
