@@ -107,6 +107,8 @@ paths:
   # Create Product Route
   /products/create:
     post:
+      security:
+        - bearerAuth: []
       description: Route used in order to create a Products API product.
       tags:
         - POST Products
@@ -139,6 +141,8 @@ paths:
   # Update Product by ID Route
   /products/update/{id}:
     patch:
+      security:
+        - bearerAuth: []
       description: Update single product by id in Products API.
       tags:
         - UPDATE Products
@@ -164,6 +168,8 @@ paths:
   # Purchase Product by ID and Amount Route
   /products/buy/{id}?amount:
     patch:
+      security:
+        - bearerAuth: []
       description: Buy single product by id and amount in Products API.
       tags:
         - UPDATE Products
