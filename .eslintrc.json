@@ -2,17 +2,13 @@
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
   "rules": {
-    "no-console": "off",
-    "no-unused-vars": "off",
     "arrow-body-style": "off",
-    "node/no-unsupported-features/es-syntax": [
-      "off",
-      {
-        "version": ">=8.0.0",
-        "ignores": []
-      }
-    ],
     "func-names": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+
+    "no-console": "warn",
+    "no-unused-vars": "off",
+
+    "node/no-unsupported-features/es-syntax": "off"
   }
 }

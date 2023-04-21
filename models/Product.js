@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema(
@@ -76,5 +77,22 @@ ProductSchema.pre("save", function () {
   ).toFixed(2);
   this.price = calculatedNewPrice;
 });
+
+ProductSchema.pre("findOneAndUpdate",function (next) {
+  const {sale,price} = this.getUpdate()
+  if(!sale){
+    next()
+  }
+  const convertedSaleAmount  = Number(sale.split("%")[0]);
+  const calculatedNewPrice = (
+    price -
+    (price * convertedSaleAmount) / 100
+  ).toFixed(2);
+  this.setUpdate({
+    ...this.getUpdate(),
+    price: calculatedNewPrice
+  })
+  next()
+})
 
 module.exports = mongoose.model("products", ProductSchema);

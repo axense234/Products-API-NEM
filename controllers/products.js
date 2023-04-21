@@ -35,10 +35,6 @@ const getAllProducts = async (req, res) => {
     queryObject.name = { $regex: name, $options: "i" };
   }
 
-  if (sale && (sale === "true" || sale === "false")) {
-    queryObject.sale = Boolean(sale);
-  }
-
   if (tag && tagsList.find((tagInList) => tagInList === tag)) {
     queryObject.tag = tag;
   }
@@ -92,7 +88,17 @@ const getAllProducts = async (req, res) => {
 
   allProducts = allProducts.skip(skip).limit(limit);
 
-  const products = await allProducts;
+  let products = await allProducts;
+
+  if (sale && sale === "true") {
+    products = products.filter((product) => {
+      const productSaleProcentage = product.sale.split("%")[0];
+      if (productSaleProcentage !== "0") {
+        return product;
+      }
+      return null;
+    });
+  }
 
   if (products.length < 1) {
     return res
@@ -109,7 +115,6 @@ const getAllProducts = async (req, res) => {
 
 const getSingleProduct = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const singleProduct = await Product.findById(id);
   if (!singleProduct) {
     return res.status(StatusCodes.NOT_FOUND).json({
@@ -133,13 +138,15 @@ const createProduct = async (req, res) => {
   }
   return res
     .status(StatusCodes.CREATED)
-    .json({ product: createdProduct, msg: "Successfully created product." });
+    .json({ msg: "Successfully created product.", product: createdProduct });
 };
 
 const updateProduct = async (req, res) => {
-  const { id } = req.params;
+  const { id} = req.params;
+  const {originalProductPrice} = req.query
   const { ...product } = req.body;
-  const updatedProduct = await Product.findByIdAndUpdate(id, product, {
+  product.price = Number(originalProductPrice)
+  const updatedProduct = await Product.findOneAndUpdate({_id:id},product, {
     new: true,
     runValidators: true,
   });
@@ -269,7 +276,6 @@ const authorizeSwaggerUI = async (req, res) => {
     username === process.env.SWAGGER_UI_USERNAME &&
     password === process.env.SWAGGER_UI_PASS
   ) {
-    console.log("passed if");
     token = jwt.sign(
       { id: randomString.random(50), username },
       process.env.SECRET_JWT_KEY,

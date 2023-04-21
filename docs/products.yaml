@@ -34,7 +34,7 @@ paths:
           name: sale
           description: Query Param to see products on sale in Products API(true or false).
           schema:
-            type: integer
+            type: boolean
         - in: query
           name: tag
           description: Query Param to filter query results by tag in Products API.Tags available are fruit,vegetable,condiment,canned,grain,beverage,meat,dairy,hygiene,animals.
@@ -139,7 +139,7 @@ paths:
         "500":
           description: Could not insert template products in Products API(Server Error)
   # Update Product by ID Route
-  /products/update/{id}:
+  /products/update/{id}?originalProductPrice:
     patch:
       security:
         - bearerAuth: []
@@ -160,6 +160,11 @@ paths:
           description: The id of the product you want to update.
           schema:
             type: integer
+        - in: query
+          name: originalProductPrice
+          description: The original price of the product you want to update (pair it up with sale in the request body to actually update the price)
+          schema:
+            type: float
       responses:
         "200":
           description: Successfully updated a product in Products API.
