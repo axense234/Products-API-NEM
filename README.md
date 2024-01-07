@@ -54,6 +54,7 @@ npm test
 - Test the server using docker-compose
 
 ```
+docker build -t products-api-nem .
 docker compose up
 ```
 
