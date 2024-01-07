@@ -13,8 +13,9 @@ Also the Product model has a method that, on product creation, if an initial sal
 
 ### Dependencies
 
-- check package.json for details
-- might also want to have a mongodb database(through mongodb atlas preferably)
+- Git installed on your machine
+- Docker installed on your machine(optional)
+- A MongoDB DB (atlas, local or container)
 
 ### Installing
 
@@ -27,10 +28,13 @@ npm install
 ```
 
 - Rename **.env.sample** to **.env** and put your own environment variables
-  - **MONGO_URU** = the uri of your mongodb database
   - **SECRET_JWT_KEY** = a random, secret key for jwt use
-  - **SWAGGER_UI_PASS** = the pass for your swagger authorization route
   - **SWAGGER_UI_USERNAME** = the username for your swagger authorization route
+  - **SWAGGER_UI_PASS** = the pass for your swagger authorization route
+  - **MONGO_ROOT_USERNAME** = the username of your mongodb instance
+  - **MONGO_ROOT_PASSWORD** = the password of your mongodb instance
+  - **PORT** = the port where the server will be listening
+  - **MONGO_URI** = the uri of your mongodb database
 - **OPTIONAL**: if you want you can create a **nodemon.json** config file so that nodemon can watch .yaml files too(useful during development) with the following content:
 
 ```
@@ -45,6 +49,12 @@ npm install
 
 ```
 npm test
+```
+
+- Test the server using docker-compose
+
+```
+docker compose up
 ```
 
 ## **Authors**

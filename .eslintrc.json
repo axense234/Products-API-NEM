@@ -6,7 +6,7 @@
     "func-names": "off",
     "consistent-return": "off",
 
-    "no-console": "warn",
+    "no-console": "off",
     "no-unused-vars": "off",
 
     "node/no-unsupported-features/es-syntax": "off"
